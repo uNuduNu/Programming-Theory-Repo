@@ -21,10 +21,14 @@ public class EnemyController : MonoBehaviour
     {
         FacePlayer();
 
+        EnemyMove();
 
+        EnemyAttack();
+    }
+
+    protected virtual void EnemyMove()
+    {
         Vector3 playerDirection = GetPlayerDirection();
-
-//        transform.Rotate(playerDirection);
 
         Vector3 movement = playerDirection * speed * Time.deltaTime;
         movement.y = 0;
@@ -32,7 +36,12 @@ public class EnemyController : MonoBehaviour
         transform.position += movement;
     }
 
-    public void FacePlayer()
+    protected virtual void EnemyAttack()
+    {
+
+    }
+
+    protected void FacePlayer()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -56,7 +65,7 @@ public class EnemyController : MonoBehaviour
         return (player.transform.position - transform.position).normalized;
     }
 
-    public void Hit(int damage)
+    public void OnBulletHit(int damage)
     {
         health -= damage;
 
