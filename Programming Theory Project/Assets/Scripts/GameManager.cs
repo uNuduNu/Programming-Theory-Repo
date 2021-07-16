@@ -1,15 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     public GameObject[] enemyPrefab;
 
     private int waveNumber = 1;
     private int enemyCount = 0;
 
     [SerializeField] float spawnRange = 10.0f;
+
+    public TextMeshProUGUI GameOverText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI healthText;
+
+    private bool gameOver = false;
+    private int score = 0;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+
+            return;
+        }
+
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +48,20 @@ public class GameManager : MonoBehaviour
         {
             waveNumber++;
             SpawnEnemyWave(waveNumber);
+        }
+
+        if (gameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Time.timeScale = 1.0f;
+                SceneManager.LoadScene(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Time.timeScale = 1.0f;
+                SceneManager.LoadScene(0);
+            }
         }
     }
 
@@ -44,5 +81,26 @@ public class GameManager : MonoBehaviour
         float spawnPosZ = Random.Range(-spawnRange, spawnRange);
 
         return new Vector3(spawnPosX, 0, spawnPosZ);
+    }
+
+    public void UpdateHealth(int health)
+    {
+        healthText.text = "Health : " + health;
+    }
+
+    public void AddScore()
+    {
+        score++;
+
+        scoreText.text = "Score : " + score;
+    }
+
+    public void GameOver()
+    {
+        GameOverText.gameObject.SetActive(true);
+
+        Time.timeScale = 0.0f;
+
+        gameOver = true;
     }
 }

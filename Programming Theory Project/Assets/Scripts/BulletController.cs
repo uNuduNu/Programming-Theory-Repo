@@ -8,6 +8,10 @@ public class BulletController : MonoBehaviour
 
     [SerializeField] float force = 8.0f;
     [SerializeField] int bulletDamage = 1;
+    [SerializeField] float levelBounds = 50.0f;
+    [SerializeField] float destructionDelay = 2.0f;
+
+    bool hasHitObject = false; // don't allow multihits since we don't delete bullets instantly
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +25,8 @@ public class BulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x > 10 || transform.position.x < -10 || 
-            transform.position.z > 10 || transform.position.z < -10)
+        if (transform.position.x > levelBounds || transform.position.x < -levelBounds || 
+            transform.position.z > levelBounds || transform.position.z < -levelBounds)
         {
             Destroy(gameObject);
         }
@@ -41,10 +45,29 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (true == hasHitObject)
+        {
+            return;       
+        }
+
+        hasHitObject = true;
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<Enemy>().OnBulletHit(bulletDamage);
-            Destroy(gameObject);
+
+            GameManager.Instance.AddScore();
         }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerController>().OnBulletHit(bulletDamage);
+        }
+
+        Invoke("DestroyBullet", destructionDelay);
+    }
+
+    private void DestroyBullet()
+    {
+        Destroy(gameObject);
     }
 }

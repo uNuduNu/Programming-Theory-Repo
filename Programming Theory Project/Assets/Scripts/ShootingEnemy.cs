@@ -9,8 +9,8 @@ public class ShootingEnemy : Enemy
     [SerializeField] float shootingDelay = 3.0f;    // Shoot every 3 seconds
     [SerializeField] float moveToDistance = 5.0f;
 
-    public GameObject bulletPrefab;
-    public GameObject targetObject;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] GameObject targetObject;
 
     private float startDelay = 1.0f;
 

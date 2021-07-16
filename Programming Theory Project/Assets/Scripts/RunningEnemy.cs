@@ -6,6 +6,8 @@ using UnityEngine;
 // child
 public class RunningEnemy : Enemy
 {
+    [SerializeField] float hitForce = 5.0f;
+
     // POLYMORPHISM
     protected override void Move()
     {
@@ -22,4 +24,15 @@ public class RunningEnemy : Enemy
     protected override void EnemySetup()
     {
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerController>().OnEnemyHit(hitForce, GetPlayerDirection());
+
+            Destroy(gameObject);
+        }
+    }
+
 }

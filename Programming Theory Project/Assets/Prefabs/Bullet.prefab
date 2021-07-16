@@ -126,4 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293e2cb83787dae45b93da69a2222bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 8
+  force: 4
+  bulletDamage: 1
+  levelBounds: 50
