@@ -44,6 +44,5 @@ public class GameManager : MonoBehaviour
         float spawnPosZ = Random.Range(-spawnRange, spawnRange);
 
         return new Vector3(spawnPosX, 0, spawnPosZ);
-
     }
 }

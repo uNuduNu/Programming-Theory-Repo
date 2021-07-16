@@ -650,7 +650,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab:
-  - {fileID: 7174401852879918497, guid: 62d4163aa5038514b8e6454beb5161bf, type: 3}
+  - {fileID: 4744467473845331924, guid: 7519a41b1e7417b4d8fe57b7ba2aa380, type: 3}
+  - {fileID: 2530021801386888734, guid: dc161c5f63f4e824ea07719ba0f4d959, type: 3}
   spawnRange: 10
 --- !u!4 &1648735109
 Transform:
